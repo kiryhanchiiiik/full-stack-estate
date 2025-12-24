@@ -35,6 +35,8 @@ export const login = async (req, res) => {
 
     if (!isPasswordValid)
       return res.status(401).json({ message: "Invalid Credentials!" });
+
+    res.setHeader("Set-Cookie", "test=" + "myValue").json("success");
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to login!" });

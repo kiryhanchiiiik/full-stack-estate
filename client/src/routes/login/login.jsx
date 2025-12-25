@@ -11,6 +11,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     setIsLoading(true);
     const formData = new FormData(e.target);
 
@@ -24,8 +25,6 @@ function Login() {
       });
 
       console.log(res);
-
-      navigate("/login");
     } catch (err) {
       setError(err.response?.data?.message);
     } finally {

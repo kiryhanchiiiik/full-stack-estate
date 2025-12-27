@@ -10,6 +10,7 @@ function ProfilePage() {
   const { updateUser, currentUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
   const handleLogout = async () => {
     try {
       const res = await apiRequest.post("/auth/logout");

@@ -48,9 +48,24 @@ export const updatePost = async (req, res) => {
     res.status(500).json({ message: "Failed to update posts!" });
   }
 };
+
 export const deletePost = async (req, res) => {
+  const id = req.params.id;
+  const TokenUserId = req.userId;
   try {
-    res.status(200).json();
+    const post = await prisma.post.findUnique({
+      where: { id },
+    });
+
+    if (post.userId === TokenUserId) {
+      return res.status(403).json({ message: "Not Autorized!" });
+    }
+
+    await prisma.post.delete({
+      where: { id },
+    });
+
+    res.status(200).json({ message: "Post deleted!" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to delete posts!" });

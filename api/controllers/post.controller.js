@@ -1,9 +1,10 @@
-import prisma from "./../lib/prisma";
+import prisma from "./../lib/prisma.js";
+
 export const getPosts = async (req, res) => {
   try {
     const posts = await prisma.post.findMany();
 
-    prisma.res.status(200).json(posts);
+    res.status(200).json(posts);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to send posts!" });
@@ -11,7 +12,7 @@ export const getPosts = async (req, res) => {
 };
 
 export const getPost = async (req, res) => {
-  const id = req.params;
+  const id = req.params.id;
   try {
     const post = await prisma.post.findUnique({
       where: { id },
@@ -57,7 +58,7 @@ export const deletePost = async (req, res) => {
       where: { id },
     });
 
-    if (post.userId === TokenUserId) {
+    if (post.userId !== TokenUserId) {
       return res.status(403).json({ message: "Not Autorized!" });
     }
 

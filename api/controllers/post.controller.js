@@ -25,8 +25,16 @@ export const getPost = async (req, res) => {
 };
 
 export const addPost = async (req, res) => {
+  const body = req.body;
+  const tokenUserToken = req.userId;
   try {
-    res.status(200).json();
+    const newPost = await prisma.post.create({
+      data: {
+        ...body,
+        userId: tokenUserToken,
+      },
+    });
+    res.status(200).json(newPost);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to add posts!" });

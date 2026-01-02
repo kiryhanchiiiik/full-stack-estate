@@ -153,6 +153,9 @@ function NewPostPage() {
         </div>
       </div>
       <div className="sideContainer">
+        {images.map((image, index) => {
+          return <img src={image} key={index} alt="" />;
+        })}
         <UploadWidget
           uwConfig={{
             multiple: true,
@@ -160,6 +163,7 @@ function NewPostPage() {
             uploadPreset: "estate",
             folder: "avatars",
           }}
+          setState={setImages}
         />
       </div>
     </div>

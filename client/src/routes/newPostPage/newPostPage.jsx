@@ -4,11 +4,14 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import apiRequest from "../../lib/apiRequest";
 import UploadWidget from "./../../components/uploadWidget/uploadWidget";
+import { useNavigate } from "react-router-dom";
 
 function NewPostPage() {
   const [value, setValue] = useState("");
   const [images, setImages] = useState([]);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,6 +44,7 @@ function NewPostPage() {
           restaurant: parseInt(inputs.restaurant),
         },
       });
+      navigate("/" + res.data.id);
     } catch (err) {
       console.log(err);
       setError(err);
